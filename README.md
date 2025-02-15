@@ -45,12 +45,15 @@ npx hardhat init
 ```bash
 npx hardhat compile
 ```
+If prompted, select `Create a JavaScript project`.
 
 ### **5️⃣ Deploy to Local Hardhat Network**
 ```bash
 npx hardhat node
 npx hardhat run scripts/deploy.js --network localhost
 ```
+If you see **“Nothing to compile”**, make sure your contracts are inside `contracts/` and have correct Solidity versions in `hardhat.config.js`.
+
 ### **6️⃣ Run Tests**
 ```bash
 npx hardhat test
