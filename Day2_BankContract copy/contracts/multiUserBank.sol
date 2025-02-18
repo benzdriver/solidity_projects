@@ -3,7 +3,7 @@ pragma solidity ^0.8.28;
 
 contract MultiUserBank{
     address payable public owner;
-    mapping(address addr => uint amount) balance;
+    mapping(address => uint) balance;
 
     event Deposit(address indexed sender, uint amount, uint balance);
     event Withdrawal(address indexed sender, uint amount, uint balance);
@@ -23,9 +23,10 @@ contract MultiUserBank{
         require(amount > 0, "Your withdrawalm money should be higher than zero");
         uint current_balance = balance[msg.sender];
         require(amount <= current_balance, "Insufficient balance");
+        (bool sent, ) = payable(msg.sender).call{value: amount}("");
+        require(sent, "Transfer failed");
         balance[msg.sender] = current_balance - amount; 
-        payable(msg.sender).transfer(amount);
-        emit Withdrawal(msg.sender, amount, current_balance);
+        emit Withdrawal(msg.sender, amount, balance[msg.sender]);
     }
     
     function getUserBankBalance() public view returns (uint256) {
