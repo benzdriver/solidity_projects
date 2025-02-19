@@ -20,7 +20,7 @@ contract MultiUserBank{
     }
 
     function withdrawal(uint amount) public{
-        require(amount > 0, "Your withdrawalm money should be higher than zero");
+        require(amount > 0, "Your withdrawal money should be higher than zero");
         uint current_balance = balance[msg.sender];
         require(amount <= current_balance, "Insufficient balance");
         (bool sent, ) = payable(msg.sender).call{value: amount}("");
@@ -29,7 +29,7 @@ contract MultiUserBank{
         emit Withdrawal(msg.sender, amount, balance[msg.sender]);
     }
     
-    function getUserBankBalance() public view returns (uint256) {
-        return balance[msg.sender];
+    function getUserBankBalance(address user) public view returns (uint256) {
+        return balance[user];
     }
 }
